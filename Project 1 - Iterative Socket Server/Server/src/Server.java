@@ -22,7 +22,9 @@ public class Server {
         int PORT = Integer.parseInt(args[0]);
 
         // This Map holds all request handlers keyed by an enum so it's easy to add new handlers
-        HashMap<RequestType, RequestHandler> handlers = new HashMap<RequestType, RequestHandler> (Map.of()) ;
+        HashMap<RequestType, RequestHandler> handlers = new HashMap<RequestType, RequestHandler> (Map.of(
+            RequestType.DateTime, new DateTimeHandler()
+        )) ;
 
         // Greeting
         System.out.printf("%s %n%nGroup:\tFernando Jimenez Mendez %n\tDavid Rojas Gonzalez %n%n", PROJECT_NAME);
