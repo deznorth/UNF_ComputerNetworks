@@ -41,18 +41,16 @@ public class Server {
                     PrintWriter output = new PrintWriter(client.getOutputStream(), true);
                     BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 ) {
-                    System.out.println("Connection established from: " + client.getInetAddress());
                     RequestType requestType = RequestType.valueOf(input.readLine());
 
                     if (requestType == RequestType.Quit) {
                         break;
                     }
 
+                    System.out.printf("%nHandling incoming '%s' request from [%s].%n", requestType.name(), client.getInetAddress());
                     for (RequestType type : handlers.keySet()) {
                         if (type == requestType) {
                             String response = handlers.get(type).resolve() + "%n%n";
-                            // Print to local console
-                            System.out.printf(response);
                             // Submit to client
                             output.printf(response);
                         }
