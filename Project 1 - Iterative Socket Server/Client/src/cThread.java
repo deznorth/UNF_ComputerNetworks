@@ -37,8 +37,7 @@ public class cThread extends Thread{
 		}
 		catch(IOException e) {
 			System.out.println("I/O error: " + e.getMessage());
-		}
-		
+		}	
 	}
 	
 	
@@ -81,7 +80,7 @@ public class cThread extends Thread{
 		
 		catch(IOException e) {
 			//Exits system if error occurs
-			System.out.println("Error occured in I/O stream.\n");
+			System.out.println("Error occurred in I/O stream.\n");
 			System.exit(1);
 		}
 		
