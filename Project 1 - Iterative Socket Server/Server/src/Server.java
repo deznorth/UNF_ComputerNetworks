@@ -50,7 +50,11 @@ public class Server {
 
                     for (RequestType type : handlers.keySet()) {
                         if (type == requestType) {
-                            output.printf(handlers.get(type).resolve() + "%n%n");
+                            String response = handlers.get(type).resolve() + "%n%n";
+                            // Print to local console
+                            System.out.printf(response);
+                            // Submit to client
+                            output.printf(response);
                         }
                     }
 

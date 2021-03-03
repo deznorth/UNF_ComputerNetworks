@@ -9,7 +9,7 @@
       "name": "Launch Server",
       "request": "launch",
       "mainClass": "Server",
-      "projectName": "Server_b66044f3",
+      "projectName": "Server",
       "args": "5000"
     }
   ]
