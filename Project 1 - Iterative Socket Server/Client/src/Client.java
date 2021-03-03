@@ -24,17 +24,7 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 		HOST = in.next();
 		System.out.println();
 
-		try (
-			Socket socket = new Socket(HOST, PORT);
-			PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		) {
-			String line;
-
-			if (input.ready())
-			while((line = input.readLine()) != null) {
-				System.out.println(line);
-			}
+			
 
 			int operation;
 
@@ -53,47 +43,35 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 				operation = in.nextInt();
 				System.out.println();
 				
-				//Requests number of clients ////////////////////////////////////////
-				System.out.print("\nEnter the number of clients to generate: ");
-				nClients = in.nextInt();
-				System.out.println("\n");
+				if(operation > 0 && operation < 8) {
 				
-				//Generates threads based on # of clients
-				cThread[] thread = new cThread[nClients];
-				for(int i = 0; i < nClients; i++) {
+					//Requests number of clients ////////////////////////////////////////
+					System.out.print("\nEnter the number of clients to generate: ");
+					nClients = in.nextInt();
+					System.out.println("\n");
 					
-					thread[i] = new cThread(HOST, PORT, operation);
+					//Generates threads based on # of clients
+					cThread[] thread = new cThread[nClients];
+					for(int i = 0; i < nClients; i++) {
+						
+						thread[i] = new cThread(HOST, PORT, operation);
+					}
+				}
+				
+				else {
+					System.out.println("");
 				}
 				
 				
-				for(int i = 0; i < nClients; i++) {
-
-				switch (operation) {
-					case 1 : output.println(RequestType.DateTime.name());
-						break;
-					case 2 : output.println(RequestType.Uptime.name());
-						break;
-					case 3 : output.println(RequestType.Memory.name());
-						break;
-					case 4 : output.println(RequestType.Netstat.name());
-						break;
-					case 5 : output.println(RequestType.CurrentUsers.name());
-						break;
-					case 6 : output.println(RequestType.RunningProcesses.name());
-						break;
-					case 7 :
-						output.println(RequestType.Quit.name());
-						break;
-					default:
-						System.out.println("Wrong command entered. Please try again.\n");
-						break;
-				}
-			} while (operation != 7);
-		} catch(UnknownHostException ex) {
-			System.out.println("Server not found: " + ex.getMessage());
-		} catch(IOException ex) {
-			System.out.println("I/O error: " + ex.getMessage());
-		}
+				
+//				for(int i = 0; i < nClients; i++) {
+//					
+//				}
+//
+//				
+//				}
+				
+		} while (operation != 7); 			
 	}
 }
 
