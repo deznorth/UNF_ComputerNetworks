@@ -11,6 +11,8 @@ public class cThread extends Thread{
 	
 	private String HOST;
 	private int PORT; 
+	private long timeS; //starts when thread is executed
+	private long totalTime; //total time spent
 	private int command; //sends command to server
 	private String line; //displays info from server
 	private PrintWriter print; //used to print to the server
@@ -42,6 +44,8 @@ public class cThread extends Thread{
 	
 	public void start() {
 		
+		timeS = System.currentTimeMillis();
+		
 		switch (command) {
 	
 		case 1 : print.println(RequestType.DateTime.name());
@@ -59,22 +63,31 @@ public class cThread extends Thread{
 		case 7 :
 			print.println(RequestType.Quit.name());
 			break;
-		default:
-			System.out.println("Wrong command entered. Please try again.\n");
-			break;
+		}
+		
+		
+		try {
+			//Reading output from server
+			if (input.ready()) {
+				while((line = input.readLine()) != null) {
+					System.out.println(line);
+				}
+			}
 			
+			input.close();
+			print.close();
+			clientS.close();
 		}
 		
-//		if (input.ready())
-//			while((line = input.readLine()) != null) {
-//				System.out.println(line);
-//			}
-		
-		
-		//long time = System.currentTimeMillis();
-		
+		catch(IOException e) {
+			//Exits system if error occurs
+			System.out.println("Error occured in I/O stream.\n");
+			System.exit(1);
 		}
-	
+		
+		//Total time after thread was executed
+		totalTime = System.currentTimeMillis() - timeS;
+	}
 }
 	
 

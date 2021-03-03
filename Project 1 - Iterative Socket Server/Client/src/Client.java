@@ -11,7 +11,7 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 
 	public static void main(String[] args) {
 		// Variables
-		int PORT, nClients;
+		int PORT, nClients, operation;
 		String HOST;
 
 		//Requests PORT number
@@ -23,10 +23,6 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 		System.out.print("Enter the network address: ");
 		HOST = in.next();
 		System.out.println();
-
-			
-
-			int operation;
 
 			do {
 				//Requests operation
@@ -45,7 +41,7 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 				
 				if(operation > 0 && operation < 8) {
 				
-					//Requests number of clients ////////////////////////////////////////
+					//Requests number of clients
 					System.out.print("\nEnter the number of clients to generate: ");
 					nClients = in.nextInt();
 					System.out.println("\n");
@@ -56,20 +52,18 @@ public class Client extends Thread{ //CHANGED CLASS ////////////////////////////
 						
 						thread[i] = new cThread(HOST, PORT, operation);
 					}
+					
+					//Threads are executed
+					for(int i = 0; i < nClients; i++) {
+						
+						//thread[i].
+					}
 				}
 				
 				else {
-					System.out.println("");
+					System.out.println("Wrong command. Please try again\n");
+					continue;
 				}
-				
-				
-				
-//				for(int i = 0; i < nClients; i++) {
-//					
-//				}
-//
-//				
-//				}
 				
 		} while (operation != 7); 			
 	}
