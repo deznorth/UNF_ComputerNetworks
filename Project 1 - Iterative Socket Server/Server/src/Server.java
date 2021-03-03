@@ -23,7 +23,8 @@ public class Server {
 
         // This Map holds all request handlers keyed by an enum so it's easy to add new handlers
         HashMap<RequestType, RequestHandler> handlers = new HashMap<RequestType, RequestHandler> (Map.of(
-            RequestType.DateTime, new DateTimeHandler()
+            RequestType.DateTime, new DateTimeHandler(),
+            RequestType.Uptime, new UptimeHandler()
         )) ;
 
         // Greeting
@@ -41,18 +42,18 @@ public class Server {
                     PrintWriter output = new PrintWriter(client.getOutputStream(), true);
                     BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 ) {
-                    System.out.println("Connection established from: " + client.getInetAddress());
                     RequestType requestType = RequestType.valueOf(input.readLine());
 
                     if (requestType == RequestType.Quit) {
                         break;
                     }
 
+                    System.out.printf("%nHandling incoming '%s' request from [%s].%n", requestType.name(), client.getInetAddress());
+
+                    // Iterate the handlers HashMap and execute corresponding handler
                     for (RequestType type : handlers.keySet()) {
                         if (type == requestType) {
                             String response = handlers.get(type).resolve() + "%n%n";
-                            // Print to local console
-                            System.out.printf(response);
                             // Submit to client
                             output.printf(response);
                         }
