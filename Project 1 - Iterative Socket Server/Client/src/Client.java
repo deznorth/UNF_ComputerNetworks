@@ -2,10 +2,11 @@ import java.net.Socket;
 import java.rmi.UnknownHostException;
 import java.io.*;
 import java.util.Scanner;
-
+import java.time.LocalDateTime;
 import entities.RequestType;
 
-public class Client {
+public class Client extends Thread{ //CHANGED CLASS ////////////////////////////////
+	
 	static Scanner in = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -51,6 +52,21 @@ public class Client {
 
 				operation = in.nextInt();
 				System.out.println();
+				
+				//Requests number of clients ////////////////////////////////////////
+				System.out.print("\nEnter the number of clients to generate: ");
+				nClients = in.nextInt();
+				System.out.println("\n");
+				
+				//Generates threads based on # of clients
+				cThread[] thread = new cThread[nClients];
+				for(int i = 0; i < nClients; i++) {
+					
+					thread[i] = new cThread(HOST, PORT, operation);
+				}
+				
+				
+				for(int i = 0; i < nClients; i++) {
 
 				switch (operation) {
 					case 1 : output.println(RequestType.DateTime.name());
