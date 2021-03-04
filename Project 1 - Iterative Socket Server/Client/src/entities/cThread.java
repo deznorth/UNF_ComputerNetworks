@@ -52,14 +52,15 @@ public class cThread extends Thread{
 		// Submit corresponding command to the server
 		print.println(request.name());
 		try {
-			String result = this.getName() + "%n%n";
-			//Reading output from server
-			if (request != RequestType.Quit)
-			while((line = input.readLine()) != null) {
-				if (line.isEmpty()) continue;
-				result += String.format("%s %n", line);
+			if (request != RequestType.Quit) {
+				String result = this.getName() + "%n%n";
+				//Reading output from server
+				while((line = input.readLine()) != null) {
+					if (line.isEmpty()) continue;
+					result += String.format("%s %n", line);
+				}
+				System.out.printf(result + "%n");
 			}
-			System.out.printf(result + "%n");
 
 			input.close();
 			print.close();

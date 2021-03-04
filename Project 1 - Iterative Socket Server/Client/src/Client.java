@@ -1,8 +1,10 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import entities.RequestType;
 import entities.cThread;
+import util.CSVExporter;
 
 public class Client {
 
@@ -85,15 +87,30 @@ public class Client {
 					}
 				}
 
-				// Calculate the average Server response time
-				long sumOfTimes = 0;
-				for (long t : cThread.times) {
-					sumOfTimes += t;
+				if (request != RequestType.Quit) {
+					CSVExporter exporter = new CSVExporter();
+					ArrayList<String> col = new ArrayList<String>();
+
+					col.add(request.name());
+
+					// Calculate the average Server response time
+					long sumOfTimes = 0;
+					for (int i = 0; i< cThread.times.size(); i++) {
+						long t = cThread.times.get(i);
+						col.add(String.valueOf(t));
+						System.out.printf("%nTime for Client Request #%d: \t%dms", i + 1, t);
+						sumOfTimes += t;
+					}
+					double avgTime = sumOfTimes / (double)nClients;
+					col.add("");
+					col.add(String.valueOf(avgTime));
+					col.add(String.valueOf(sumOfTimes));
+					// Export values to csv file
+					exporter.export(col, request.name());
+					cThread.times.clear();
+					System.out.printf("%n%nAverage time of response: \t%sms %n", avgTime);
+					System.out.printf("%nTotal turn around time: \t%sms %n", sumOfTimes);
 				}
-				double avgTime = sumOfTimes / (double)nClients;
-				cThread.times.clear();
-				System.out.printf("%nAverage time of response: \t%sms %n", avgTime);
-				System.out.printf("%nTotal turn around time: \t%sms %n", sumOfTimes);
 			} else {
 				System.out.println("Wrong command. Please try again\n");
 				continue;
