@@ -24,7 +24,11 @@ public class Server {
         // This Map holds all request handlers keyed by an enum so it's easy to add new handlers
         HashMap<RequestType, RequestHandler> handlers = new HashMap<RequestType, RequestHandler> (Map.of(
             RequestType.DateTime, new DateTimeHandler(),
-            RequestType.Uptime, new UptimeHandler()
+            RequestType.Uptime, new UptimeHandler(),
+            RequestType.Memory, new MemoryHandler(),
+            RequestType.Netstat, new NetstatHandler(),
+            RequestType.CurrentUsers, new CurrentUsersHandler(),
+            RequestType.RunningProcesses, new RunningProcessesHandler()
         )) ;
 
         // Greeting
