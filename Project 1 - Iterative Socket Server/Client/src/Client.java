@@ -106,7 +106,7 @@ public class Client {
 					col.add(String.valueOf(avgTime));
 					col.add(String.valueOf(sumOfTimes));
 					// Export values to csv file
-					exporter.export(col, request.name());
+					exporter.export(col, String.format("%s_%s", request.name(), String.valueOf(nClients)));
 					cThread.times.clear();
 					System.out.printf("%n%nAverage time of response: \t%sms %n", avgTime);
 					System.out.printf("%nTotal turn around time: \t%sms %n", sumOfTimes);
