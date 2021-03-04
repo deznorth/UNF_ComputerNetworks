@@ -13,7 +13,7 @@ public class RunningProcessesHandler implements RequestHandler {
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       String run;
       while((run = reader.readLine()) != null) {
-				response += run + "%n";
+				response += run.replaceAll("%", "") + "%n";
 			}
       return response;
     } catch (IOException e) {
